@@ -2,7 +2,7 @@
 
 Welcome to **Go Services**! This project is a simple task management application built with Go and PostgreSQL.
 
-![Go Logo](https://golang.org/doc/gopher/header.png)
+![Go Logo](https://www.google.com/search?client=firefox-b-d&sca_esv=51d92fddc59c0275&sxsrf=ADLYWIJV7kz19meJxlI_HOUFCCDxFf7ycQ:1726387958786&q=go+logo&udm=2&fbs=AEQNm0CbCVgAZ5mWEJDg6aoPVcBgWizR0-0aFOH11Sb5tlNhd7Qv31WAq-g3XdD7m281OKyew6CGJrEYYQ4lESOC_x5KkE_SDY1zOtKTls3hovcNa2k1YDSvJhS2fQhB5Ri9O-IoFy8f0NZG9Ke6CCLFU2wJsydnlW4XM6rAQNUwK-zEKnN80cnD1lANRf-OLMmpC5ggVBWl8u32o-UDsAkZgpX7pu2rDA&sa=X&ved=2ahUKEwizo5yowMSIAxVDQjABHU49NYAQtKgLegQIJBAB&biw=1920&bih=947&dpr=1#vhid=0M8BmUWei-4eJM&vssid=mosaic)
 
 ## Description
 

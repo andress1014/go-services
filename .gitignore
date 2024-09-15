@@ -1,0 +1,45 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.coverprofile
+
+# Dependency directories (for example, vendor/)
+vendor/
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Directories for build and test outputs
+bin/
+build/
+coverage.out
+dist/
+
+# IDE and editor configuration files
+.vscode/
+.idea/
+*.swp
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.cache
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# By default, the `go mod` and `go.sum` files should be tracked,
+# but if you're not using modules, or you use vendoring, uncomment the next line:
+# go.sum
+
+# Local environment files
+.env

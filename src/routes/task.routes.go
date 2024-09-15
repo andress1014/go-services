@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/andress1014/go-gorm-crud/src/config/handler"
 	"github.com/andress1014/go-gorm-crud/src/db"
 	models "github.com/andress1014/go-gorm-crud/src/model"
 	"github.com/gorilla/mux"
@@ -13,12 +14,13 @@ func GetTasksHandler(w http.ResponseWriter, r *http.Request) {
 	var tasks []models.Task
 	db.DB.Find(&tasks)
 
-	json.NewEncoder(w).Encode(&tasks)
+	handler.HandleResponse(w, http.StatusOK, tasks)
 }
 
 func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
 	var tasks models.Task
 	if err := json.NewDecoder(r.Body).Decode(&tasks); err != nil {
+		handler.HandleError(w, http.StatusBadRequest, err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -28,8 +30,7 @@ func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(&tasks)
+	handler.HandleResponse(w, http.StatusCreated, tasks)
 }
 
 func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,11 +39,10 @@ func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
 	db.DB.First(&tasks, params["id"])
 
 	if tasks.ID == 0 {
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error": "record not found"}`))
+		handler.HandleError(w, http.StatusNotFound, "Record not found")
+		return
 	}
-	json.NewEncoder(w).Encode(tasks)
-
+	handler.HandleResponse(w, http.StatusOK, tasks)
 }
 
 func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
@@ -57,5 +57,5 @@ func DeleteTaskHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	db.DB.Unscoped().Delete(&tasks)
-	w.WriteHeader(http.StatusOK)
+	handler.HandleResponse(w, http.StatusOK, tasks)
 }

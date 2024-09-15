@@ -13,7 +13,7 @@ import (
 func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	db.DB.Find(&users)
-	json.NewEncoder(w).Encode(&users)
+	handler.HandleResponse(w, http.StatusOK, users)
 }
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -22,23 +22,22 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	db.DB.First(&users, params["id"])
 
 	if users.ID == 0 {
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error": "record not found"}`))
+		handler.HandleError(w, http.StatusNotFound, "record not found")
 		return
 	}
-	json.NewEncoder(w).Encode(users)
+	handler.HandleResponse(w, http.StatusOK, users)
 }
 
 func PostUsersHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		handler.HandleError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	if err := db.DB.Create(&user).Error; err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handler.HandleError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -51,8 +50,7 @@ func DeleteUsersHandler(w http.ResponseWriter, r *http.Request) {
 	db.DB.First(&users, params["id"])
 
 	if users.ID == 0 {
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"error": "record not found"}`))
+		handler.HandleError(w, http.StatusNotFound, "record not found")
 		return
 	}
 

@@ -17,15 +17,16 @@ func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {
-	var users models.User
+	var user models.User
 	params := mux.Vars(r)
-	db.DB.First(&users, params["id"])
+	db.DB.First(&user, params["id"])
 
-	if users.ID == 0 {
+	if user.ID == 0 {
 		handler.HandleError(w, http.StatusNotFound, "record not found")
 		return
 	}
-	handler.HandleResponse(w, http.StatusOK, users)
+	db.DB.Model(&user).Association("Tasks").Find(&user.Tasks)
+	handler.HandleResponse(w, http.StatusOK, user)
 }
 
 func PostUsersHandler(w http.ResponseWriter, r *http.Request) {
